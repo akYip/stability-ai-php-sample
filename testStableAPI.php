@@ -39,16 +39,16 @@ $height = 512;
 
 
 $joutput = json_decode($output,true);
-
 if($joutput["artifacts"][0]["finishReason"] != "SUCCESS"){
 	print $joutput["artifacts"][0]["finishReason"];
+	return;
 }
 
+#comment out if you don't need to create a image file
 file_put_contents("stab.png", base64_decode($joutput["artifacts"][0]["base64"]));
 
 
 $image = imagecreatefromstring( base64_decode($joutput["artifacts"][0]["base64"]));
-
 header('Content-Type: image/png');
 imagepng($image);
 imagedestroy($image);
